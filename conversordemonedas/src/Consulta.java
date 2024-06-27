@@ -26,7 +26,6 @@ public class Consulta {
             JsonObject conversionRatesJson = jsonObject.get("conversion_rates").getAsJsonObject();
             Map<String, Double> conversionRates = new Gson().fromJson(conversionRatesJson, Map.class);
 
-
             return new Moneda(result, baseCode, conversionRates);
 
         } catch (Exception e) {
