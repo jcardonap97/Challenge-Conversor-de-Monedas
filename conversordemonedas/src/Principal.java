@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Principal {
@@ -27,71 +28,77 @@ public class Principal {
         int opcion = 0;
         while (opcion != 9){
             System.out.println(menu);
-            opcion = lecturaUsuaio.nextInt();
-
-            String monedaBase = "";
-            String monedaAConvertir = "";
-            switch (opcion){
-                case 1:
-                    monedaBase = "COP";
-                    monedaAConvertir = "USD";
-                    break;
-
-                case 2:
-                    monedaBase = "USD";
-                    monedaAConvertir = "COP";
-                    break;
-
-                case 3:
-                    monedaBase = "BRL";
-                    monedaAConvertir = "USD";
-                    break;
-
-                case 4:
-                    monedaBase = "USD";
-                    monedaAConvertir = "BRL";
-                    break;
-
-                case 5:
-                    monedaBase = "CLP";
-                    monedaAConvertir = "USD";
-                    break;
-
-                case 6:
-                    monedaBase = "USD";
-                    monedaAConvertir = "CLP";
-                    break;
-
-                case 7:
-                    monedaBase = "COP";
-                    monedaAConvertir = "BRL";
-                    break;
-
-                case 8:
-                    monedaBase = "BRL";
-                    monedaAConvertir = "COP";
-                    break;
-
-                case 9:
-                    System.out.println("Saliendo del programa, gracias por usar nuestros servicios.");
-                    continue;
-
-                default:
-                    System.out.println("Opción no valida");
-                    continue;
-            }
 
             try {
-                Moneda moneda = consulta.buscaMoneda(monedaBase);
+                opcion = lecturaUsuaio.nextInt();
 
-                System.out.println("Ingrese la cantidad que desea convertir: ");
-                double cantidadAConvertir = lecturaUsuaio.nextDouble();
+                String monedaBase = "";
+                String monedaAConvertir = "";
+                switch (opcion) {
+                    case 1:
+                        monedaBase = "COP";
+                        monedaAConvertir = "USD";
+                        break;
 
-                double resultadoConversion = conversion.convertir(moneda, monedaAConvertir, cantidadAConvertir);
-                System.out.println(cantidadAConvertir + " " + "[" + monedaBase + "] son " + resultadoConversion + " " + "[" + monedaAConvertir + "] \n");
+                    case 2:
+                        monedaBase = "USD";
+                        monedaAConvertir = "COP";
+                        break;
 
-            }catch (RuntimeException e){
-                System.out.println("Error al buscar la moneda: " + e.getMessage());
+                    case 3:
+                        monedaBase = "BRL";
+                        monedaAConvertir = "USD";
+                        break;
+
+                    case 4:
+                        monedaBase = "USD";
+                        monedaAConvertir = "BRL";
+                        break;
+
+                    case 5:
+                        monedaBase = "CLP";
+                        monedaAConvertir = "USD";
+                        break;
+
+                    case 6:
+                        monedaBase = "USD";
+                        monedaAConvertir = "CLP";
+                        break;
+
+                    case 7:
+                        monedaBase = "COP";
+                        monedaAConvertir = "BRL";
+                        break;
+
+                    case 8:
+                        monedaBase = "BRL";
+                        monedaAConvertir = "COP";
+                        break;
+
+                    case 9:
+                        System.out.println("Saliendo del programa, gracias por usar nuestros servicios.");
+                        continue;
+
+                    default:
+                        System.out.println("Opción no valida");
+                        continue;
+                }
+
+                try {
+                    Moneda moneda = consulta.buscaMoneda(monedaBase);
+
+                    System.out.println("Ingrese la cantidad que desea convertir: ");
+                    double cantidadAConvertir = lecturaUsuaio.nextDouble();
+
+                    double resultadoConversion = conversion.convertir(moneda, monedaAConvertir, cantidadAConvertir);
+                    System.out.println(cantidadAConvertir + " " + "[" + monedaBase + "] son " + resultadoConversion + " " + "[" + monedaAConvertir + "] \n");
+
+                } catch (RuntimeException e) {
+                    System.out.println("Error al buscar la moneda, por favor, ingrese un valor permitido.");
+                    lecturaUsuaio.nextLine();
+                }
+            }catch (InputMismatchException e){
+                System.out.println("Entrada no válida. Por favor ingrese un número.");
                 lecturaUsuaio.nextLine();
             }
         }
